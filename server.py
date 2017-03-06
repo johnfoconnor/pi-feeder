@@ -10,6 +10,7 @@ import scheduling
 import auth
 from constants import MOTOR_DEFAULT_DURATION
 import prefs
+import Logger
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -206,6 +207,8 @@ def disable_caching(response):
     return response
 
 if __name__ == '__main__':
+    # hijack stdout to route into a log file
+    Logger(LOG_FILE_PATH)
     scheduling.init_scheduler()
     auth.init_auth()
     init_visibility()
