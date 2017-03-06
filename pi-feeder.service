@@ -6,7 +6,7 @@ After=network.target network-online.target
 [Service]
 User=%i
 Type=idle
-ExecStart=/usr/bin/python3 /home/pi/pi-feeder/server.py 2>&1 >> "/home/pi/pi-feeder/pifeeder.log"
+ExecStart=/bin/sh -c '/usr/bin/python3 /home/pi/pi-feeder/server.py 2>&1 | tee /home/pi/pi-feeder/pifeeder.log'
 Restart=always
 SendSIGKILL=no
 

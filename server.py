@@ -202,7 +202,7 @@ def logout():
 def logs():
     """dumps log file output"""
     with open(LOG_FILE_PATH, 'r') as logfile:
-        logs = logfile.read()
+        logs = logfile.read().replace('\n', '<br>')
     return logs
 
 @app.after_request
