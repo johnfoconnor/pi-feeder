@@ -10,11 +10,11 @@ def get_connection():
 
 def get_hashed_password(plain_text_password):
     """Hashes a new password."""
-    return bcrypt.hashpw(plain_text_password, bcrypt.gensalt())
+    return bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
 
 def check_password(plain_text_password, hashed_password):
     """Compares a plain-text password to a hashed password."""
-    return bcrypt.checkpw(plain_text_password, hashed_password)
+    return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_password)
 
 def validate_token(token):
     if token is None:

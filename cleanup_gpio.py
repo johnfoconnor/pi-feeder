@@ -3,12 +3,13 @@
 
 import RPi.GPIO as GPIO
 from time import sleep
+from constants import *
 
 GPIO.setmode(GPIO.BCM)
 
-Motor1A = 4
-Motor1B = 17
-Motor1E = 18
+Motor1A = GPIO_PIN_ENABLE
+Motor1B = GPIO_PIN_FORWARD
+Motor1E = GPIO_PIN_BACKWARD
 
 GPIO.setup(Motor1A, GPIO.OUT)
 GPIO.setup(Motor1B, GPIO.OUT)
