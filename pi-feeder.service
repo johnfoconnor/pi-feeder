@@ -1,0 +1,14 @@
+[Unit]
+Description=Pi Feeder Server
+Wants=network-online.target
+After=network.target network-online.target
+
+[Service]
+User=%i
+Type=idle
+ExecStart=/usr/bin/python3 /home/pi/pi-feeder/server.py
+Restart=always
+SendSIGKILL=no
+
+[Install]
+WantedBy=multi-user.target
