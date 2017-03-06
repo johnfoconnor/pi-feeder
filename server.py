@@ -8,9 +8,8 @@ from discovery import init_visibility
 from exceptions import InvalidRequestData
 import scheduling
 import auth
-from constants import MOTOR_DEFAULT_DURATION
+from constants import *
 import prefs
-import Logger
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -199,6 +198,13 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('home'))
 
+@app.route('/logs')
+def logs():
+    """dumps log file output"""
+    with open(LOG_FILE_PATH, 'r') as logfile:
+        logs = logfile.read()
+    return logs
+
 @app.after_request
 def disable_caching(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -207,8 +213,6 @@ def disable_caching(response):
     return response
 
 if __name__ == '__main__':
-    # hijack stdout to route into a log file
-    Logger(LOG_FILE_PATH)
     scheduling.init_scheduler()
     auth.init_auth()
     init_visibility()

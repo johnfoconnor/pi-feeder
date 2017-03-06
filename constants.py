@@ -1,7 +1,7 @@
 """Constant configuration options."""
 
 # relative to pwd or absolute
-LOG_FILE_PATH = "pi-feeder.log"
+LOG_FILE_PATH = "/home/pi/pi-feeder/pifeeder.log"
 
 GPIO_PIN_ENABLE = 17
 GPIO_PIN_FORWARD = 18
