@@ -31,9 +31,9 @@ class MotorUtil:
 
 		if not override:
 			current_date = right_now()
-#			if date_str(current_date) == date_str(LAST_RUN):
-#				print("Already ran in this minute, ignoring.")
-#				return False
+			if date_str(current_date) == date_str(LAST_RUN):
+				print("Already ran in this minute, ignoring.")
+				return False
 
 		LAST_RUN = right_now()
 		IS_RUNNING = True
