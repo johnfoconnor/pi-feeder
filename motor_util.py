@@ -6,6 +6,7 @@ from datetime import datetime as dt
 from date_utils import right_now, subtract_days, date_str
 from constants import *
 import threading
+import logging
 
 IS_RUNNING = False
 LAST_RUN = subtract_days(right_now(), 1)
@@ -26,18 +27,18 @@ class MotorUtil:
 		global LAST_RUN
 
 		if IS_RUNNING:
-			print("Already running!")
+			logging.debug("Already running!")
 			return False
 
 		current_date = right_now()
 		if not override:
 			if date_str(current_date) == date_str(LAST_RUN):
-				print("Ignoring, already ran at", LAST_RUN)
+				logging.debug("Ignoring, already ran at", LAST_RUN)
 				return False
 
 		LAST_RUN = current_date
 		IS_RUNNING = True
-		print("Running at ", date_str(LAST_RUN))
+		logging.debug("Running at ", date_str(LAST_RUN))
 
 		self.enable.on()
 		self.motor.forward(speed)
@@ -45,5 +46,5 @@ class MotorUtil:
 		self.enable.off()
 
 		IS_RUNNING = False
-		print("Motor going to idle.")
+		logging.debug("Motor going to idle.")
 		return True

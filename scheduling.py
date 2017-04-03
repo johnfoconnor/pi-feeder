@@ -10,6 +10,9 @@ from motor_util import MotorUtil
 import sms
 import prefs
 
+import logging
+logging.basicConfig(filename='pifeeder.log',level=logging.DEBUG)
+
 IS_INIT = False
 
 def day_diff(src, dst, next_week=False):
@@ -44,14 +47,14 @@ def notify_phones_of_trigger():
 
 def ticker():
     """The ticker which checks if a schedule moment has been reached."""
-    print("Started!")
+    logging.debug("Started!")
     global IS_INIT
     while IS_INIT:
         try:
             next_occurrence = get_next_occurrence()
             if next_occurrence is not None:
                 if check_should_activate(next_occurrence):
-                    print("Schedule has triggered for", next_occurrence)
+                    logging.debug("Schedule has triggered for", next_occurrence)
                     # Remove one-time occurrence if any
                     remove_onetime_occurrence(next_occurrence.year, next_occurrence.month, next_occurrence.day, next_occurrence.hour, next_occurrence.minute)
                     if MotorUtil().turn_motor():
@@ -59,7 +62,7 @@ def ticker():
             sleep(20)
         except KeyboardInterrupt:
             break
-    print("Ticker has quit!")
+    logging.debug("Ticker has quit!")
     return
 
 THREAD = threading.Thread(target=ticker)
@@ -72,11 +75,11 @@ def init_scheduler():
     """Creates database tables if they don't already exist."""
     global IS_INIT
     if IS_INIT:
-        print("Scheduler was already initialized!")
+        logging.debug("Scheduler was already initialized!")
         return
     IS_INIT = True
 
-    print("Setting up databases...")
+    logging.debug("Setting up databases...")
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute('CREATE TABLE IF NOT EXISTS recurrence (day_id INTEGER NOT NULL, hour INTEGER NOT NULL, minute INTEGER NOT NULL)')
@@ -84,7 +87,7 @@ def init_scheduler():
     conn.commit()
     conn.close()
 
-    print("Starting ticker...")
+    logging.debug("Starting ticker...")
     THREAD.start()
     return
 
@@ -161,7 +164,7 @@ LAST_NEXT_OCCURENCE = None
 
 def get_next_occurrence():
     next_recurrence = get_next_recurrence()
-    print("Next recurrence is ", next_recurrence)
+    logging.debug("Next recurrence is ", next_recurrence)
     next_onetime = get_next_onetime_occurrence()
     if next_recurrence is None:
         result = next_onetime
@@ -173,7 +176,7 @@ def get_next_occurrence():
         result = next_recurrence
     global LAST_NEXT_OCCURENCE
     if LAST_NEXT_OCCURENCE != result:
-        print("Next occurrence:", result)
+        logging.debug("Next occurrence:", result)
     LAST_NEXT_OCCURENCE = result
     return result
 

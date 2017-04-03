@@ -1,6 +1,7 @@
 from socket import *
 import threading
 import json
+import logging
 
 IS_INIT = False
 PORT = 5001
@@ -10,14 +11,14 @@ VERSION = 1
 def process_message(message_json, sender):
     message_type = message_json['type']
     if message_type == 'discover':
-        print('Received discovery request from', sender)
+        logging.debug('Received discovery request from', sender)
         response = { 'type': 'respond', 'version': VERSION }
         response_str = json.dumps(response)
         send_to(sender, response_str)
     return
 
 def receiver():
-    print('Listening for discovery requests...')
+    logging.debug('Listening for discovery requests...')
     server = socket(AF_INET, SOCK_DGRAM)
     server.bind(('', PORT))
     global IS_INIT
@@ -32,7 +33,7 @@ def receiver():
             break
         except:
             continue
-    print('Ending discovery visibility!')
+    logging.debug('Ending discovery visibility!')
     server.close()
     return
 
@@ -41,7 +42,7 @@ THREAD = threading.Thread(target=receiver)
 def init_visibility():
     global IS_INIT
     if IS_INIT:
-        print('Already listening for discovery requests!')
+        logging.debug('Already listening for discovery requests!')
         return
     IS_INIT = True
     THREAD.start()
