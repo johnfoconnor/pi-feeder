@@ -29,15 +29,15 @@ class MotorUtil:
 			print("Already running!")
 			return False
 
+		current_date = right_now()
 		if not override:
-			current_date = right_now()
 			if date_str(current_date) == date_str(LAST_RUN):
-				print("Already ran in this minute, ignoring.")
+				print("Ignoring, already ran at", LAST_RUN)
 				return False
 
-		LAST_RUN = right_now()
+		LAST_RUN = current_date
 		IS_RUNNING = True
-		print(date_str(LAST_RUN))
+		print("Running at ", date_str(LAST_RUN))
 
 		self.enable.on()
 		self.motor.forward(speed)

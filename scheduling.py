@@ -51,12 +51,12 @@ def ticker():
             next_occurrence = get_next_occurrence()
             if next_occurrence is not None:
                 if check_should_activate(next_occurrence):
-                    print("Schedule has triggered!")
+                    print("Schedule has triggered for", next_occurrence)
                     # Remove one-time occurrence if any
                     remove_onetime_occurrence(next_occurrence.year, next_occurrence.month, next_occurrence.day, next_occurrence.hour, next_occurrence.minute)
                     if MotorUtil().turn_motor():
                         notify_phones_of_trigger()
-            sleep(5)
+            sleep(20)
         except KeyboardInterrupt:
             break
     print("Ticker has quit!")
@@ -161,6 +161,7 @@ LAST_NEXT_OCCURENCE = None
 
 def get_next_occurrence():
     next_recurrence = get_next_recurrence()
+    print("Next recurrence is ", next_recurrence)
     next_onetime = get_next_onetime_occurrence()
     if next_recurrence is None:
         result = next_onetime
