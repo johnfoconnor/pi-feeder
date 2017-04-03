@@ -11,7 +11,7 @@ VERSION = 1
 def process_message(message_json, sender):
     message_type = message_json['type']
     if message_type == 'discover':
-        logging.debug('Received discovery request from', sender)
+        logging.debug('Received discovery request from %s' % sender)
         response = { 'type': 'respond', 'version': VERSION }
         response_str = json.dumps(response)
         send_to(sender, response_str)

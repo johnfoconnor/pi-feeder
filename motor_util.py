@@ -33,12 +33,12 @@ class MotorUtil:
 		current_date = right_now()
 		if not override:
 			if date_str(current_date) == date_str(LAST_RUN):
-				logging.debug("Ignoring, already ran at", LAST_RUN)
+				logging.debug("Ignoring, already ran at %s " % LAST_RUN)
 				return False
 
 		LAST_RUN = current_date
 		IS_RUNNING = True
-		logging.debug("Running at ", date_str(LAST_RUN))
+		logging.debug("Running at %s " % date_str(LAST_RUN))
 
 		self.enable.on()
 		self.motor.forward(speed)
