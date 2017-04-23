@@ -11,7 +11,16 @@ import sms
 import prefs
 
 import logging
-logging.basicConfig(filename='pifeeder.log',level=logging.DEBUG)
+from logging.handlers import TimedRotatingFileHandler
+
+logger = logging.basicConfig(level=logging.DEBUG)
+handler = TimedRotatingFileHandler(
+    filename='pifeeder.log',
+    when="h",
+    interval=24,
+    backupCount=8
+)
+logging.getLogger('').addHandler(handler)
 
 IS_INIT = False
 
