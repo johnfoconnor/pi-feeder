@@ -7,6 +7,7 @@ from date_utils import right_now, subtract_days, date_str
 from constants import *
 import threading
 import logging
+import notify_email
 
 IS_RUNNING = False
 LAST_RUN = subtract_days(right_now(), 1)
@@ -47,4 +48,5 @@ class MotorUtil:
 
 		IS_RUNNING = False
 		logging.debug("Motor going to idle.")
+		notify_email.trigger(current_date)
 		return True
