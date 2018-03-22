@@ -202,8 +202,9 @@ def logout():
 def logs():
     """dumps log file output"""
     with open(LOG_FILE_PATH, 'r') as logfile:
-        logs = logfile.read().replace('\n', '<br>')
-    return logs
+        logs = logfile.read().split('\n')
+    return "<br>".join(reversed(logs))
+
 
 @app.after_request
 def disable_caching(response):

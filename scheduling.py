@@ -13,13 +13,21 @@ import prefs
 import logging
 from logging.handlers import TimedRotatingFileHandler
 
-logger = logging.basicConfig(level=logging.DEBUG)
+logger = logging.basicConfig(
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S',
+    level=logging.DEBUG
+)
 handler = TimedRotatingFileHandler(
     filename='pifeeder.log',
     when="h",
     interval=24,
     backupCount=8
 )
+handler.setFormatter(logging.Formatter(
+    fmt='%(asctime)s %(levelname)-8s %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+))
 logging.getLogger('').addHandler(handler)
 
 IS_INIT = False

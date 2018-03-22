@@ -39,5 +39,5 @@ def get_formatted_time(aDatetime):
 
 
 def trigger(aDateTime):
-    send_email("catfeeder", ['johnnyoc3@gmail.com', paige.sweetin@gmail.com'], "Fed the cat on {}".format(get_formatted_time(aDateTime)), "")
+    send_email("catfeeder", ['johnnyoc3@gmail.com', 'paige.sweetin@gmail.com'], "Fed the cat on {}".format(get_formatted_time(aDateTime)), "")
 
